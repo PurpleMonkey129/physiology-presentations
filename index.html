@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Physiology Resource Portal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Physiology Resource Portal</h1>
+    <p class="lead">Click a system to view presentations. Use filters to toggle PG Talk or PG Practical.</p>
+
+    <div class="controls">
+      <button id="refreshBtn" class="btn">Refresh 🔄</button>
+      <div id="globalFilters">
+        <button class="btn primary" data-filter="All">All</button>
+        <button class="btn" data-filter="PG Talk">PG Talk</button>
+        <button class="btn" data-filter="PG Practical">PG Practical</button>
+      </div>
+      <button id="instructionsBtn" class="btn ghost">Instructions</button>
+    </div>
+    <!-- 🔍 Search bar below top nav -->
+    <div id="globalSearchContainer">
+    <div class="search-wrapper">
+        <input type="text" id="globalSearch" placeholder="Search systems or topics...">
+        <span id="clearSearch" title="Clear Search">×</span>
+    </div>
+    </div>
+    <!-- 🔍 Global search results list -->
+    <div id="searchResults" class="hidden"></div>
+
+
+
+  </header>
+
+  <main>
+    <div id="noticeArea" class="center"></div>
+    <div id="systemsGrid" class="grid"></div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal" style="display:none">
+      <div class="modal-box">
+        <button id="closeModal" class="close-btn">✖</button>
+        <h2 id="modalTitle"></h2>
+
+        <div class="modal-controls">
+          <div class="modal-filters">
+            <button class="btn primary" data-filter="All_modal">All</button>
+            <button class="btn" data-filter="PG Talk_modal">PG Talk</button>
+            <button class="btn" data-filter="PG Practical_modal">PG Practical</button>
+          </div>
+        </div>
+
+        <div id="modalNotice"></div>
+        <div id="topicsContainer" class="topics"></div>
+      </div>
+    </div>
+    <!-- Instructions Modal -->
+    <div id="instructionsModal" class="modal">
+    <div class="modal-content">
+        <span id="closeInstructions" class="close">&times;</span>
+        <h2>How to Use This Portal</h2>
+        <ul>
+        <li>Click on any <strong>system card</strong> (e.g., CVS, CNS, AFT) to view its presentations.</li>
+        <li>Use the <strong>top filters</strong> (<em>All / PG Talk / PG Practical</em>) to view relevant systems.</li>
+        <li>Inside each system’s dialog, you can further filter or search topics.</li>
+        <li>Click <strong>Open</strong> next to a topic to view or download it from Google Drive.</li>
+        <li>Click <strong>X</strong> to close any dialog.</li>
+        </ul>
+    </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="small">Powered by Google Drive API</div>
+  </footer>
+
+  <!-- 🌟 Suggestion and Upload Buttons -->
+<footer id="bottomActions">
+  <button id="suggestBtn" class="btn secondary">💡 Have Suggestions?</button>
+  <button id="uploadBtn" class="btn primary">➕ Contribute a File</button>
+</footer>
+
+<!-- 🌟 Suggestion Modal -->
+<div id="suggestModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeSuggest">&times;</span>
+    <h3>Have Suggestions?</h3>
+    <textarea id="suggestText" placeholder="Type your suggestion here..." rows="4"></textarea>
+    <button id="submitSuggest" class="btn primary">Submit</button>
+  </div>
+</div>
+
+<!-- 🌟 Upload Modal -->
+<div id="uploadModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeUpload">&times;</span>
+    <h3>Upload a Presentation</h3>
+    <input type="file" id="fileInput" accept=".ppt,.pptx,.pdf" />
+    <button id="submitUpload" class="btn primary">Upload</button>
+  </div>
+</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
