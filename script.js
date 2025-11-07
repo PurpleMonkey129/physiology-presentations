@@ -416,3 +416,59 @@ submitUpload.onclick = () => {
   alert(`Uploading ${file.name} (mocked for now)...`);
   uploadModal.style.display = "none";
 };
+
+// ----------- PUBLIC DRIVE UPLOAD VIA APPS SCRIPT ------------
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5qJsvXLyQXfSQrviL_0JD5AyRpUP7b4qJ8cTzMv7lyXZdis4piRH7wW3nVEEGp9sG/exec"; // 🔹 replace with your Web App URL
+
+submitUpload.onclick = async () => {
+  const file = fileInput.files[0];
+  if (!file) return alert("Please select a file!");
+
+  const category = uploadCategory.value;
+  const system = newSystem.value || uploadSystem.value;
+  if (!system) return alert("Please select or create a system!");
+
+  uploadStatus.textContent = "Uploading... please wait.";
+
+  try {
+    // Read file as base64
+    const base64File = await fileToBase64(file);
+
+    const payload = {
+      fileName: file.name,
+      base64File,
+      category,
+      system,
+    };
+
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      uploadStatus.textContent = "✅ File uploaded successfully!";
+      fileInput.value = "";
+      newSystem.value = "";
+      uploadSystem.selectedIndex = 0;
+    } else {
+      uploadStatus.textContent = "❌ Upload failed: " + data.message;
+    }
+  } catch (e) {
+    console.error(e);
+    uploadStatus.textContent = "❌ Upload failed.";
+  }
+};
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
