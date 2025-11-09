@@ -472,3 +472,8 @@ function fileToBase64(file) {
   });
 }
 
+function uploadFinished() {
+  const status = document.getElementById("uploadStatus");
+  status.textContent = "✅ Upload complete!";
+  setTimeout(() => (status.textContent = ""), 4000);
+}

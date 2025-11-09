@@ -94,31 +94,32 @@
   </div>
 </div>
 
-<!-- 🌟 Upload Modal -->
-<!-- 🌟 Upload Modal -->
-<div id="uploadModal" class="modal">
-  <div class="modal-content">
-    <span class="close" id="closeUpload">&times;</span>
-    <h3>Upload a Presentation</h3>
+<form id="uploadForm"
+      action="https://script.google.com/macros/s/AKfycbxip6gj4Wv-qGm13Q1I7xKkYy_K8Rk9-Pt9hIZi3ZtHdhaRbl6pQ2E1Iv34koXQrAoM/exec"
+      method="post"
+      enctype="multipart/form-data"
+      target="hiddenFrame">
 
-    <label for="uploadCategory">Select Type:</label>
-    <select id="uploadCategory">
-      <option value="PG Talk">PG Talk</option>
-      <option value="PG Practical">PG Practical</option>
-    </select>
+  <label>Category:</label>
+  <select name="category" id="uploadCategory">
+    <option value="PG Talk">PG Talk</option>
+    <option value="PG Practical">PG Practical</option>
+  </select>
 
-    <label for="uploadSystem">Select System:</label>
-    <select id="uploadSystem">
-      <option value="" disabled selected>Select System</option>
-    </select>
-    <input type="text" id="newSystem" placeholder="Or create new system">
+  <label>System:</label>
+  <input type="text" name="system" id="uploadSystem" placeholder="e.g. CVS" required>
 
-    <input type="file" id="fileInput" accept=".ppt,.pptx,.pdf" />
-    <button id="submitUpload" class="btn primary">Upload</button>
-    <p class="small text-muted">Allowed formats: .ppt, .pptx, .pdf</p>
-    <div id="uploadStatus" class="small"></div>
-  </div>
-</div>
+  <label>Select File:</label>
+  <input type="file" name="file" id="uploadFile" accept=".ppt,.pptx,.pdf" required>
+
+  <button type="submit" class="btn primary">Upload</button>
+</form>
+
+<!-- Hidden iframe prevents page reload -->
+<iframe name="hiddenFrame" style="display:none;" onload="uploadFinished()"></iframe>
+
+<p id="uploadStatus"></p>
+
 
 
   <script src="script.js"></script>
