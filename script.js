@@ -410,13 +410,6 @@ uploadBtn.onclick = () => {
 };
 closeUpload.onclick = () => (uploadModal.style.display = "none");
 
-submitUpload.onclick = () => {
-  const file = fileInput.files[0];
-  if (!file) return alert("Please select a file first!");
-  alert(`Uploading ${file.name} (mocked for now)...`);
-  uploadModal.style.display = "none";
-};
-
 // ----------- PUBLIC DRIVE UPLOAD VIA APPS SCRIPT ------------
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5qJsvXLyQXfSQrviL_0JD5AyRpUP7b4qJ8cTzMv7lyXZdis4piRH7wW3nVEEGp9sG/exec"; // 🔹 replace with your Web App URL
 
