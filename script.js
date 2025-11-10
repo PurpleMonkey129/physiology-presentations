@@ -398,63 +398,59 @@ submitSuggest.onclick = () => {
   suggestModal.style.display = "none";
 };
 
+
+// ========================================
+// REPLACE YOUR EXISTING UPLOAD MODAL CODE WITH THIS
+// ========================================
+
+// 🔹 CONFIGURATION - Add your Google Form URL here
+const GOOGLE_FORM_URL = "https://forms.gle/wwLxYthjdc6KkYit7"; // e.g., https://docs.google.com/forms/d/e/xxxxx/viewform
+
 // --- Upload Modal Logic ---
 const uploadBtn = document.getElementById("uploadBtn");
 const uploadModal = document.getElementById("uploadModal");
 const closeUpload = document.getElementById("closeUpload");
-const submitUpload = document.getElementById("submitUpload");
-const fileInput = document.getElementById("fileInput");
 
 uploadBtn.onclick = () => {
-  uploadModal.style.display = "flex";
+  // Option A: Open Google Form in new tab (Recommended)
+  window.open(GOOGLE_FORM_URL, '_blank');
+  
+  // Option B: Show modal with embedded form (Alternative)
+  // uploadModal.style.display = "flex";
 };
-closeUpload.onclick = () => (uploadModal.style.display = "none");
 
-// ----------- PUBLIC DRIVE UPLOAD VIA APPS SCRIPT ------------
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5qJsvXLyQXfSQrviL_0JD5AyRpUP7b4qJ8cTzMv7lyXZdis4piRH7wW3nVEEGp9sG/exec"; // 🔹 replace with your Web App URL
+closeUpload.onclick = () => {
+  uploadModal.style.display = "none";
+};
 
-submitUpload.onclick = async () => {
-  const file = fileInput.files[0];
-  if (!file) return alert("Please select a file!");
-
-  const category = uploadCategory.value;
-  const system = newSystem.value || uploadSystem.value;
-  if (!system) return alert("Please select or create a system!");
-
-  uploadStatus.textContent = "Uploading... please wait.";
-
-  try {
-    // Read file as base64
-    const base64File = await fileToBase64(file);
-
-    const payload = {
-      fileName: file.name,
-      base64File,
-      category,
-      system,
-    };
-
-    const res = await fetch(APPS_SCRIPT_URL, {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      uploadStatus.textContent = "✅ File uploaded successfully!";
-      fileInput.value = "";
-      newSystem.value = "";
-      uploadSystem.selectedIndex = 0;
-    } else {
-      uploadStatus.textContent = "❌ Upload failed: " + data.message;
-    }
-  } catch (e) {
-    console.error(e);
-    uploadStatus.textContent = "❌ Upload failed.";
+// Close modal when clicking outside
+window.addEventListener("click", (e) => {
+  if (e.target === uploadModal) {
+    uploadModal.style.display = "none";
   }
-};
+});
+
+// ========================================
+// ALTERNATIVE: EMBEDDED FORM IN MODAL
+// ========================================
+// If you prefer to embed the form inside the modal instead of opening a new tab,
+// update your HTML modal-content to include an iframe:
+//
+// <div id="uploadModal" class="modal">
+//   <div class="modal-content" style="max-width: 700px;">
+//     <span class="close" id="closeUpload">&times;</span>
+//     <h3>Upload a Presentation</h3>
+//     <iframe 
+//       src="https://forms.gle/wwLxYthjdc6KkYit7" 
+//       width="100%" 
+//       height="600" 
+//       frameborder="0" 
+//       marginheight="0" 
+//       marginwidth="0">
+//       Loading…
+//     </iframe>
+//   </div>
+// </div>
 
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
