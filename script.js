@@ -430,28 +430,6 @@ window.addEventListener("click", (e) => {
   }
 });
 
-// ========================================
-// ALTERNATIVE: EMBEDDED FORM IN MODAL
-// ========================================
-// If you prefer to embed the form inside the modal instead of opening a new tab,
-// update your HTML modal-content to include an iframe:
-//
-// <div id="uploadModal" class="modal">
-//   <div class="modal-content" style="max-width: 700px;">
-//     <span class="close" id="closeUpload">&times;</span>
-//     <h3>Upload a Presentation</h3>
-//     <iframe 
-//       src="https://forms.gle/wwLxYthjdc6KkYit7" 
-//       width="100%" 
-//       height="600" 
-//       frameborder="0" 
-//       marginheight="0" 
-//       marginwidth="0">
-//       Loading…
-//     </iframe>
-//   </div>
-// </div>
-
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -465,4 +443,15 @@ function uploadFinished() {
   const status = document.getElementById("uploadStatus");
   status.textContent = "✅ Upload complete!";
   setTimeout(() => (status.textContent = ""), 4000);
+}
+
+// Books page button
+const booksBtn = document.getElementById("Books");
+
+if (booksBtn) {
+  booksBtn.addEventListener("click", () => {
+    window.open("books.html", "_blank"); // Opens in new tab
+    // OR use this to open in same tab:
+    // window.location.href = "books-index.html";
+  });
 }
