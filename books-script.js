@@ -80,7 +80,7 @@ async function loadBooks() {
           id: file.id,
           title: title,
           system: systemFolder.name,
-          link: file.webViewLink || `https://drive.google.com/file/d/${file.id}/view`,
+          downloadLink: `https://drive.google.com/uc?export=download&id=${file.id}`,
           modifiedTime: file.modifiedTime
         });
       }
@@ -101,7 +101,7 @@ async function loadBooks() {
     showNotice("❌ Error loading books. Please check console.");
     booksTableBody.innerHTML = `
       <tr>
-        <td colspan="3">
+        <td colspan="2">
           <div class="empty-state">
             <div class="empty-state-icon">⚠️</div>
             <div>Error loading books. Please refresh the page.</div>
@@ -164,7 +164,7 @@ function renderBooks() {
   if (filtered.length === 0) {
     booksTableBody.innerHTML = `
       <tr>
-        <td colspan="3">
+        <td colspan="2">
           <div class="empty-state">
             <div class="empty-state-icon">📭</div>
             <div>No books found matching your criteria.</div>
@@ -184,11 +184,12 @@ function renderBooks() {
 
   booksTableBody.innerHTML = filtered.map(book => `
     <tr>
-      <td><div class="book-title">${highlight(book.title)}</div></td>
-      <td><span class="book-system">${book.system}</span></td>
       <td>
-        <a href="${book.link}" target="_blank" class="book-link">Open Book</a>
+        <a href="${book.downloadLink}" class="book-title" download>
+          ${highlight(book.title)} 📥
+        </a>
       </td>
+      <td><span class="book-system">${book.system}</span></td>
     </tr>
   `).join('');
 }

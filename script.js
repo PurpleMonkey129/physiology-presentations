@@ -256,8 +256,13 @@ function renderTopics() {
   for (const t of list) {
     const row = document.createElement("div");
     row.className = "topic-row";
+
+    // Extract file ID from the link and create download URL
+    const fileId = t.id; // Use the file ID directly
+    const downloadLink = `https://drive.google.com/uc?export=download&id=${fileId}`;
+    
     row.innerHTML = `<div class="topic-name">${t.name}</div>
-                     <div class="topic-actions"><a href="${t.link}" target="_blank">Open</a></div>`;
+                     <div class="topic-actions"><a href="${downloadLink}" download>📥</a></div>`;
     topicsContainer.append(row);
   }
 }
